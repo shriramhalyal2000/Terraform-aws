@@ -1,0 +1,3 @@
+createed a vpc with cider blcok of 10.0.0.0/16 subnet
+and configured aws provider versionand terraform required version to initialse this.
+used terraform init, validate apply and destroy executed sucessfully with aws configured seceret and secret access keys .
