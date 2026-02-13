@@ -1,0 +1,30 @@
+teraform.tfstate
+# Local .terraform directories
+.terraform/
+
+# .tfstate files
+# The terraform.tfstate file and its backups contain the state of your infrastructure
+# and should be stored in a remote backend, not committed to Git.
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, which are likely to contain sensitive data (passwords,
+# private keys, etc.). These should be managed separately (e.g., environment variables, secret managers).
+# Use a specific naming convention (e.g., terraform.tfvars.sample) for a template file you *do* want to commit.
+*.tfvars
+*.tfvars.json
+
+# Ignore override files as they are usually used for local development overrides and
+# should not be checked into source control.
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore transient lock info files created by terraform apply
+.terraform.tfstate.lock.info
+guide.txt
