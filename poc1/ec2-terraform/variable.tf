@@ -1,4 +1,4 @@
-ariable "aws_region" {
+variable "aws_region" {
   type    = string
   default = "ap-south-1"
 }
