@@ -1,8 +1,8 @@
 terraform{
     required_providers{
         aws={
-            source= "hashicopr/aws"
-            version= "~>3.38.00"
+            source= "hashicorp/aws"
+            version= "6.39.0"
         }
     }
     required_version = "1.14.8"
@@ -10,6 +10,5 @@ terraform{
 
 provider "aws"{
     region = "us-east-1"
-    output_type = "json"
     profile= "defult" #the one configured in aws/credentials
 }
