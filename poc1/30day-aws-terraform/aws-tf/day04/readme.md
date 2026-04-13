@@ -1,0 +1,3 @@
+This excersie is ment for learning how tf state file works with aws, and cloud provider.
+Whats is remote backend, how it work how it keeps track of infra desired state and actual state, why it should not be altered in any way or mopdified by user alone, but any changes should be carried out through the terraform script itself, blocking off user tampering.
+Where the terraform.tfste file should be store in what way it should be configured for terraform to access it from cloud provider, encryption and lock-table configurations.
