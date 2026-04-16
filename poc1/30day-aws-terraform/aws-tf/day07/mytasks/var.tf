@@ -11,3 +11,29 @@ variable "region" {
     "ap-south-1" =2
   }
 }
+#variable "aws_instance_eni"{
+    # type = object({
+    #     ami = string ,
+    #     eni_id = number ,
+    #     security_group_monitoring = bool
+    # })
+    # default ={
+    #     ami = "ubuntu"
+    #     ani_id = 120565
+    #     security_group_monitoring = false
+
+    # }
+#}
+
+# variable "aws_security_group"{
+#     type = tuple(string, bool, number)
+#     default = ["10.0.0.0/12", "false", 80]
+# }
+
+# variable "ami_map" {
+#   type = map(string)
+#   default = {
+#     "dev" = "c3.med"
+#     "prod" = "x3.large"
+#   }
+# }
