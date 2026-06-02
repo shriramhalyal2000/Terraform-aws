@@ -1,0 +1,16 @@
+the resource required for executing this task are:
+    1. EC2 resource List:
+        > aws_instace
+        >aws_security_group
+        >aws_key_pair
+        >aws_eip
+
+
+
+
+    2. VPC
+        > vpc_id
+        >aws_security_group
+        >routetable
+        >IGW
+        >public&private subnet
