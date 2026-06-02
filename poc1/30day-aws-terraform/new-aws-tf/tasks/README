@@ -14,3 +14,51 @@ the resource required for executing this task are:
         >routetable
         >IGW
         >public&private subnet
+
+# 1. Configure the AWS Provider
+provider "aws" {
+  region = "us-east-1"
+}
+
+# 2. Query the latest Amazon Linux 2023 AMI
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-kernel-*-x86_64"]
+  }
+}
+
+# 3. Create a Security Group for SSH access
+resource "aws_security_group" "ec2_sg" {
+  name        = "allow_ssh"
+  description = "Allow SSH inbound traffic"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Narrow this down to your IP for security
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# 4. Launch the EC2 Instance
+resource "aws_instance" "my_ec2" {
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+
+  tags = {
+    Name = "MyTerraformInstance"
+  }
+}
+
