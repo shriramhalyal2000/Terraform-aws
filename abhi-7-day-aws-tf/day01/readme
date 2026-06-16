@@ -1,0 +1,8 @@
+This is first day in terraform-aws tutorial with hands on and theory
+
+> this is conducted on gnu/linux-ubuntu distro
+> pre-requisites understanding of aws provider services and familiarity with its elements
+> aws already configured
+> terraform already configured with repository and gnu key
+> this tutorial/hands on involves launching aws resources so relevent aws iam account for resource access is necessary
+> terraform lifecycle management and statefile management
