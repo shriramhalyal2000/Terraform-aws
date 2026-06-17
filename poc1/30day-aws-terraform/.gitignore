@@ -30,3 +30,8 @@ override.tf.json
 guide.txt
 .terraform.lock.hcl
 .terraform.*.hcl
+
+# Old terraform practice repos
+poc1/
+30day-aws-terraform/
+ec2-terraform/
