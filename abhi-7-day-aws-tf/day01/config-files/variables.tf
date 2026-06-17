@@ -13,7 +13,7 @@ variable "aws_security_group" {
   type        = string
 }
 
-variable "key-name" {
+variable "key_name" {
   description = ".pem key for aws cli access"
   type        = string
 }
@@ -25,11 +25,6 @@ variable "availability_zone"{
 
 variable "device_name"{
     description = "file path to be attached to the instance"
-    type = string
-}
-
-variable "volume_id"{
-    description = "ebs volume id"
     type = string
 }
 

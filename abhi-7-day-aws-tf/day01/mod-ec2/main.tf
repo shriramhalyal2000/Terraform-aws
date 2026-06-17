@@ -9,13 +9,12 @@ terraform {
 
 module "ec2_instance" {
   source             = "../config-files/"
-  key-name           = "us-east-1.pem"
+  key_name           = "us-east-1.pem"
   ami                = "ami-0521cb2d60cfbb1a6"
   instance_type      = "t3.micro"
   aws_security_group = "http-ssh-sg"
   type               = "gp3"
   size               = "15"
   device_name        = "dev/sdb"
-  volume_id          = aws_ebs_volume.demo-ec2-vol.volume_id
   availability_zone  = "us-east-1"
 }

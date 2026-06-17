@@ -11,5 +11,5 @@ output "instance_name" {
 }
 
 output "volume_id"{
-  value = aws_ebs_volume.demo-ec2-vol.volume_id
+  value = aws_ebs_volume.demo-ec2-vol.id
 }

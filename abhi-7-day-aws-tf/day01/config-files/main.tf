@@ -1,7 +1,7 @@
 resource "aws_instance" "demo-ec2" {
   ami           = var.ami
   instance_type = var.instance_type
-  key_name      = var.key-name
+  key_name      = var.key_name
 
   tags = {
     Name = local.instance_name
