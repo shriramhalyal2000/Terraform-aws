@@ -21,7 +21,7 @@ resource "aws_security_group" "tf-instace-sg" {
 }
 
 # configure http port and attach to the sg
-resource "aws_vpc_security_group_ingress_rule" "hhtp-sg" {
+resource "aws_vpc_security_group_ingress_rule" "http-sg" {
   security_group_id = "${var.aws_security_group}.id"
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = "80"
