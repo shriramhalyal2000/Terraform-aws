@@ -1,0 +1,11 @@
+Module infrastrcuture execution of ec2 instance
+ |
+ |-Enviornments/
+ |-Module/
+
+ follows terraform module dir method to create aws cluod infrastrcuture with Root module and Child Module
+ for reuseable code ready to use.
+
+ the child module has resources defined with 
+ > aws instance ami, region, key-apir, type, creats a security group for ingress and egress of ssh and http kind
+ > creates an ebs vol and configures volume and attaches to the instance in same region
