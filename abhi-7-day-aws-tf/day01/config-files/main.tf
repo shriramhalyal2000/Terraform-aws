@@ -1,4 +1,4 @@
-resource "aws_instance" "demo-ec2" {
+resource "aws_instance" "demo_ec2" {
   ami           = var.ami
   instance_type = var.instance_type
   key_name      = var.key_name
@@ -21,7 +21,7 @@ resource "aws_security_group" "tf-instace-sg" {
 }
 
 # configure http port and attach to the sg
-resource "aws_vpc_security_group_ingress_rule" "hhtp-sg" {
+resource "aws_vpc_security_group_ingress_rule" "http-sg" {
   security_group_id = "${var.aws_security_group}.id"
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = "80"
@@ -52,6 +52,6 @@ resource "aws_ebs_volume" "demo-ec2-vol" {
 
 resource "aws_volume_attachment" "abs-attach"{
     device_name = var.device_name
-    volume_id = aws_ebs_volume.demo-ec2-vol.id
-    instance_id = aws_instance.demo-ec2.id
+    volume_id = aws_ebs_volume.demo_ec2_vol.id
+    instance_id = aws_instance.demo_ec2.id
 }
