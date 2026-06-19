@@ -1,0 +1,34 @@
+# Local .terraform directories (contains downloaded providers and modules)
+.terraform/
+
+# Hide history files that may contain sensitive workflow info
+.terraform.lock.hcl
+
+# Ignore all log files
+*.log
+*.terraform.tfstate.lock.info
+
+# Local environmental variables / secrets files
+*.tfvars
+*.tfvars.json
+
+# Ignore override files as they are meant for local tweaks
+_override.tf
+_override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# --- STATE FILES WARNING ---
+# If you are using a local backend, you MUST ignore state files to protect secrets.
+# If you are using a secure remote backend (S3, Terraform Cloud), these won't hurt, 
+# but keeping them ignored is standard best practice.
+*.tfstate
+*.tfstate.backup
+
+# Crash log files
+crash.log
+crash.*.log
