@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 module "ec2-instance" {
-  source                  = "../Enviorments"
+  source                  = "../Enviorments/dev"
   instance_ami            = "ami-0521cb2d60cfbb1a6"
   instance_region         = "us-east-1"
   instance_type           = "t3.micro"
