@@ -1,4 +1,4 @@
-resource "aws_instance" "demo-ec2" {
+resource "aws_instance" "demo_ec2" {
   ami           = var.ami
   instance_type = var.instance_type
   key_name      = var.key_name
@@ -52,6 +52,6 @@ resource "aws_ebs_volume" "demo-ec2-vol" {
 
 resource "aws_volume_attachment" "abs-attach"{
     device_name = var.device_name
-    volume_id = aws_ebs_volume.demo-ec2-vol.id
-    instance_id = aws_instance.demo-ec2.id
+    volume_id = aws_ebs_volume.demo_ec2_vol.id
+    instance_id = aws_instance.demo_ec2.id
 }

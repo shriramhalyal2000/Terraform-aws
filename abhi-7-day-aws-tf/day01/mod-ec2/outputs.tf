@@ -7,7 +7,7 @@ output "eip" {
 }
 
 output "instance_name" {
-  value = aws_instance.demo-ec2.tags_all
+  value = aws_instance.demo-ec2.tags[Name]
 }
 
 output "volume_id"{
