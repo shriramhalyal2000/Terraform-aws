@@ -1,0 +1,12 @@
+this is a ec2 instance dev enviornment resource configuration file.
+follows the terraform module format for tf resource creation,
+doesnot contain any hardcoded values but uses variables and local, and outputs .
+
+
+instance configuration as
+: instance type,
+  ebs vol attached
+  security group configured with inbound outbound
+  iam role/profile attached for instance
+  instance_launch region
+  instance_key
