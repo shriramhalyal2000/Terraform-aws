@@ -5,7 +5,7 @@ resource "aws_instance" "demo_instance" {
   region                 = var.instance_region
   key_name               = var.instance_key_name
   vpc_security_group_ids = [aws_security_group.http_ssh.id] # attaches the security group to the instance
-  iam_instance_profile = var.iam_instance_profile
+  iam_instance_profile   = var.iam_instance_profile
 }
 # security group name for the ec2 instance
 resource "aws_security_group" "http_ssh" {

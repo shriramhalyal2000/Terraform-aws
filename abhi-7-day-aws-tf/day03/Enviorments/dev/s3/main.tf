@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "env-dev-s3"{
+resource "aws_s3_bucket" "mod_tf_s3_bucket"{
     bucket =  var.aws_s3_bucket_name
 
     tags={
@@ -7,8 +7,8 @@ resource "aws_s3_bucket" "env-dev-s3"{
     }
 }
 
-resource "aws_s3_bucket_versioning" "env-dev-s3-versioned"{
-    bucket = aws_s3_bucket.env-dev-s3.id
+resource "aws_s3_bucket_versioning" "mod_tf_s3__bucket_versioned"{
+    bucket = aws_s3_bucket.mod_tf_s3_bucket.id
 
     versioning_configuration {
       status = "Enabled"
