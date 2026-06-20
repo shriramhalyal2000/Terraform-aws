@@ -17,6 +17,7 @@ module "ec2-instance" {
   instance_region         = "us-east-1"
   instance_type           = "t3.micro"
   instance_key_name       = "us-east-1"
+  iam_instance_profile    = "ec2-ssm-role"
   ip_protocol             = "tcp"
   ebs_instance_vol_type   = "gp3"
   ebs_instance_vol_size   = 15

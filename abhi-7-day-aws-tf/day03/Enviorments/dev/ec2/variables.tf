@@ -22,6 +22,11 @@ variable "aws_security_group_rule" {
   type        = string
 }
 
+variable "iam_instance_profile"{
+  description = "instance profile with prems configured with ssm"
+  type = string
+}
+
 variable "cidr_blocks" {
   description = "ipv4 cidr block for the sg "
   type        = string
