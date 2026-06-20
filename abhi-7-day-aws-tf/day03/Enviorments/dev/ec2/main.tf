@@ -10,47 +10,43 @@ resource "aws_instance" "demo_instance" {
 resource "aws_security_group" "http_ssh" {
   name        = var.aws_security_group_rule
   description = "The security group rule for ssh and http ingress traffic"
+  # instead of definign seperate resource for sg-paramenetes,
+  # define them sinside the security group resource multiple ingress and egress firewall
+  
+  # http ingress sg rule
+  ingress {
+    description = "HTTP traffic from anywhere"
+    from_port = var.from_port_http
+    to_port = var.to_port_http
+    protocol = var.ip_protocol
+    cidr_blocks = variable.cidr_blocks
+
+  }
+
+  # ssh ingress sg -rule
+  ingress {
+    description = "ssh trffic from anywhere to instance"
+    from_port = var.from_port_ssh
+    to_port = var.to_port_ssh
+    protocol = var.ip_protocol
+    cidr_blocks = variable.cidr_blocks
+
+  }
+
+  # http and ssh egress sg-rule
+  egress {
+    description = "outbound traffic from instance to internet"
+    from_port = 0
+    to_port = 0
+    protocol = "-1" # represents all kinds of protocol given its prot range set from and to both 0
+    cidr_blocks = variable.cidr_blocks
+
+  }
   tags = {
     Name = local.aws_security_group_env_name
   }
 }
-# insgress rule definition for the security group of type ssh
-resource "aws_vpc_security_group_ingress_rule" "ssh_sg" {
-  security_group_id = aws_security_group.http_ssh.id
 
-  cidr_ipv4   = var.cidr_ipv4
-  to_port     = var.to_port_ssh
-  from_port   = var.from_port_ssh
-  ip_protocol = var.ip_protocol
-}
-# ingress rule definition for the security group of type http
-resource "aws_vpc_security_group_ingress_rule" "http_sg" {
-  security_group_id = aws_security_group.http_ssh.id
-
-  cidr_ipv4   = var.cidr_ipv4
-  to_port     = var.to_port_http
-  from_port   = var.from_port_http
-  ip_protocol = var.ip_protocol
-}
-# egress rule definition for the security group of type http
-resource "aws_vpc_security_group_egress_rule" "http_sg" {
-  security_group_id = aws_security_group.http_ssh.id
-
-  cidr_ipv4   = var.cidr_ipv4
-  to_port     = var.to_port_http
-  from_port   = var.from_port_http
-  ip_protocol = var.ip_protocol
-}
-# egress rule definition for the security group of type ssh
-resource "aws_vpc_security_group_egress_rule" "ssh_sg" {
-  security_group_id = aws_security_group.http_ssh.id
-
-  cidr_ipv4   = "172.31.0.0/16"
-  to_port     = var.to_port_ssh
-  from_port   = var.from_port_ssh
-  ip_protocol = var.ip_protocol
-
-}
 # ebs vol to attach to instance definition
 resource "aws_ebs_volume" "instance_vol" {
   availability_zone = aws_instance.demo_instance.availability_zone #use same var as of instance region

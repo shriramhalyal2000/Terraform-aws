@@ -22,7 +22,7 @@ module "ec2-instance" {
   ebs_instance_vol_size   = 15
   to_port_http            = 80
   from_port_http          = 80
-  cidr_ipv4               = "0.0.0.0/0"
+  cidr_blocks             = ["0.0.0.0/0"]
   to_port_ssh             = 22
   from_port_ssh           = 22
   aws_security_group_rule = "http and ssh "
