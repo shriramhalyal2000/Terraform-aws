@@ -19,7 +19,7 @@ resource "aws_security_group" "http_ssh" {
     from_port = var.from_port_http
     to_port = var.to_port_http
     protocol = var.ip_protocol
-    cidr_blocks = var.cidr_blocks
+    cidr_blocks = variable.cidr_blocks
 
   }
 
@@ -29,7 +29,7 @@ resource "aws_security_group" "http_ssh" {
     from_port = var.from_port_ssh
     to_port = var.to_port_ssh
     protocol = var.ip_protocol
-    cidr_blocks = var.cidr_blocks
+    cidr_blocks = variable.cidr_blocks
 
   }
 
@@ -38,8 +38,8 @@ resource "aws_security_group" "http_ssh" {
     description = "outbound traffic from instance to internet"
     from_port = 0
     to_port = 0
-    protocol = "-1"
-    cidr_blocks = var.cidr_blocks
+    protocol = "-1" # represents all kinds of protocol given its prot range set from and to both 0
+    cidr_blocks = variable.cidr_blocks
 
   }
   tags = {
