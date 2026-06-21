@@ -3,8 +3,3 @@ variable "cidr_block"{
     type = string
 }
 
-
-variable "route_value"{
-    description = "route table value "
-    type = string
-}

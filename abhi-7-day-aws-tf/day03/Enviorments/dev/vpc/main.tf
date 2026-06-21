@@ -21,7 +21,7 @@ resource "aws_internet_gateway" "my_task_1_igw"{
 resource "aws_route_table" "my_task_1_rt"{
     vpc_id = aws_vpc.my_task_1.id
 
-    route = var.route_value # string []
+    route = ["0.0.0.0/0"] # string []
 
     tags={
         Name = local.vpc_name
