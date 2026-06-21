@@ -1,5 +1,5 @@
 output "vpc_name"{
-    value = aws_vpc.my_task_1.tags[Name]
+    value = aws_vpc.my_task_1.tags
 }
 
 output "vpc_id"{
