@@ -9,7 +9,7 @@ terraform{
 
 module "vpc"{
     source = "../../Enviorments/dev/vpc"
-    cidr_block_vpc = ["0.0.0.0/0"]
-    public_subnet_cidr = ["10.0.0.0/16"]
-    cidr_block_rt = ["0.0.0.0/0"]
+    cidr_block_vpc = "10.0.0.0/16"
+    public_subnet_cidr = "10.0.1.0/16"
+    cidr_block_rt = "0.0.0.0/0"
 }
