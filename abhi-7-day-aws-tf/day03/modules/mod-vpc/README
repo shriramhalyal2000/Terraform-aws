@@ -1,0 +1,5 @@
+This terraform script with module method,
+creats a vpc, 2 subnet, 1 IGW, 1  RT
+    : Subent with route table configured with internet gateway makeing it public
+    : another with just private subnet
+    : utilises subnet_association resource to attch subnet rt to its own igw 
