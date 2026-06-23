@@ -1,0 +1,30 @@
+terraorm workspaces:
+>> using terraform complex infrastructure arcgitecture is designed.
+  that design is used acrss different enviornment, like dev, test, stage-integration, prod.
+  everytime an enviornment is created that cannot be copy paste the code on to that new enviornment, even with de.tfvars, prod.tfvars to switch env vars of infra type to execute different resource types. 
+  state file cant handle multiple enviornment files for single execution.
+  So using terraform workspaces, you can replicate the same infra struture across different enviornments with statefile not getting corrupted,
+  terraform workspace new workspace create a new workspace with *.tfstate and all other directory involved, with.*.tfstate.<workspace> to maintain statefile in that workspace.
+  so when <workspace_name>.tfvars is used to change ingra config vars like region ami_id, instance_ype, and other only resource within the same workspace are affected not the other previosly deployed resource.
+  terraform apply -var.file=prod.tfvars only create the changed resource env vars for the workspace infra.
+  in git .workspace/ dir appears for it to commit or for ci pipline
+
+  example:
+    resource "aws_instance" "example"{
+        ami_id = var.ami_id
+        instance_type = var.instance_type
+    }
+
+    variable "instance_type"{
+        description ="instance type for differnt env infra"
+        value = map(string)
+        default = {
+            "dev" = "t3.micro"
+            "stage" = "t3.med"
+            "prod" = "c3.xlarge"
+            }
+    }
+
+    module "ec2-instance"{
+        instance_type = lookup(instance_type, terraform_workspace) # this executes infra according to workspace its currently in according to that instance type is auto executed.
+    }
