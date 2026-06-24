@@ -64,3 +64,9 @@ resource "aws_volume_attachment" "attach_ebs_vol" {
   volume_id   = aws_ebs_volume.instance_vol.id
   instance_id = aws_instance.demo_instance.id
 }
+
+# to launch another instance with differnt key pair , which exists but need terraform to search in your accoounht and attach it to instance
+
+data "aws_key_pair" "my_key_par"{
+  key_name = ""
+}
