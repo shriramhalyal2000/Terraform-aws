@@ -11,6 +11,8 @@ resource "aws_vpc" "task_vpc" {
 resource "aws_subnet" "my_public_sbn" {
   vpc_id     = aws_vpc.task_vpc.id
   cidr_block = var.public_subnet_cidr
+  availability_zone = var.sbn1_az
+  map_public_ip_on_launch = true
 
   tags = {
     Name = local.public_sbn_name
@@ -52,6 +54,8 @@ resource "aws_route_table_association" "vpc_task_rt_assoc"{
 resource "aws_subnet" "public_sbn_2"{
   vpc_id = aws_vpc.task_vpc.id
   cidr_block = var.public_sbn_2_cidr
+  availability_zone = var.sbn2_az
+  map_public_ip_on_launch = true #any instance launched in this have public ip mapped to it by default 
 
   tags={
     Name = local.public_sbn_2_name

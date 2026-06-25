@@ -11,3 +11,11 @@ variable "public_sbn_2_cidr" {
   description = "public subnet 2 cidr"
   type = string
 }
+variable "sbn1_az" {
+  description = "availability zone of subnet"
+  type = string
+}
+variable "sbn2_az"{
+  description = "availability zone of sbnet2"
+  type = string
+}
