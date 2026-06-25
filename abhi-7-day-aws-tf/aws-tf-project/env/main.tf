@@ -1,6 +1,5 @@
 # define a vpc
 resource "aws_vpc" "task_vpc" {
-  region     = var.task_region
   cidr_block = var.vpc_block
 
   tags = {
@@ -9,7 +8,7 @@ resource "aws_vpc" "task_vpc" {
   }
 }
 # define a public subnet with cidr blcok
-resource "aws_subent" "my_public_sbn" {
+resource "aws_subnet" "my_public_sbn" {
   vpc_id     = aws_vpc.task_vpc.id
   cidr_block = var.public_subnet_cidr
 
@@ -17,17 +16,7 @@ resource "aws_subent" "my_public_sbn" {
     Name = local.public_sbn_name
   }
 }
-# define a route table for public subnet
-resource "aws_route_table" "public_sbn_rt" {
-  vpc_id = aws_vpc.task_vpc.id
 
-  route {
-    # show public subnet cidr block where is igw through this rt
-    cidr_block = var.public_subnet_cidr
-    gateway_id = aws_internet_gateway.task_vpc_igw.id
-
-  }
-}
 # define a igw for the vpc public subnet
 resource "aws_internet_gateway" "task_vpc_igw" {
   vpc_id = aws_vpc.task_vpc.id
@@ -36,3 +25,24 @@ resource "aws_internet_gateway" "task_vpc_igw" {
     Nmae = local.igw_name
   }
 } 
+
+# define a route table for public subnet
+resource "aws_route_table" "public_sbn_rt" {
+  vpc_id = aws_vpc.task_vpc.id
+  depends_on = [ aws_internet_gateway.task_vpc_igw ]
+
+  route {
+    # show public subnet cidr block where is igw through this rt
+    cidr_block = "0.0.0.0/0" # show route to public internet access not subnet cidr
+    gateway_id = aws_internet_gateway.task_vpc_igw.id
+
+  }
+  tags={
+    Name = local.public_sbn_rt_name
+  }
+}
+
+resource "aws_route_table_association" "vpc_task_rt_assoc"{
+  subnet_id = aws_subnet.my_public_sbn.id
+  route_table_id = aws_route_table.public_sbn_rt.id
+}

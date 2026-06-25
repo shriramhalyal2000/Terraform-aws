@@ -1,8 +1,3 @@
-variable "task_region" {
-  description = "vpc /task vpc deployed region"
-  type        = string
-}
-
 variable "vpc_block" {
   description = "vpc default cir block"
   type        = string
