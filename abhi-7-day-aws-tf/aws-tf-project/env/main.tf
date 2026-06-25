@@ -46,3 +46,33 @@ resource "aws_route_table_association" "vpc_task_rt_assoc"{
   subnet_id = aws_subnet.my_public_sbn.id
   route_table_id = aws_route_table.public_sbn_rt.id
 }
+
+# define another publc subnet named subnet2
+
+resource "aws_subnet" "public_sbn_2"{
+  vpc_id = aws_vpc.task_vpc.id
+  cidr_block = var.public_sbn_2_cidr
+
+  tags={
+    Name = local.public_sbn_2_name
+  }
+}
+
+resource "aws_route_table" "public_sbn_2_rt"{
+  vpc_id = aws_vpc.task_vpc.id
+
+  route{
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.task_vpc_igw.id # single gateway per vpc, so both subnet share same igw
+
+  }
+
+  tags={
+    Name = local.public_sbn_2_rt_name
+  }
+}
+# every route table needs route{} and route table association 
+resource "aws_route_table_association" "vpc_task_sbn_2_rt"{
+  subnet_id = aws_subnet.public_sbn_2.id
+  route_table_id = aws_route_table.public_sbn_2_rt.id 
+}
