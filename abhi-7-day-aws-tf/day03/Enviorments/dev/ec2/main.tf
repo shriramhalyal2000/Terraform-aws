@@ -2,7 +2,7 @@
 resource "aws_instance" "demo_instance" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type
-  region                 = var.instance_region
+  #region                 = var.instance_region
   key_name               = var.instance_key_name
   vpc_security_group_ids = [aws_security_group.http_ssh.id] # attaches the security group to the instance
   iam_instance_profile   = var.iam_instance_profile

@@ -1,9 +1,21 @@
-module "vpc"{
-    source = "../env"
-    vpc_block = "10.0.0.0/16"
-    public_subnet_cidr = "10.0.1.0/24"
-    public_sbn_2_cidr = "10.0.2.0/24"
-    sbn1_az = "us-east-1a"
-    sbn2_az = "us-east-1b"
-
+module "vpc" {
+  source                 = "../env"
+  vpc_block              = "10.0.0.0/16"
+  public_subnet_cidr     = "10.0.1.0/24"
+  public_sbn_2_cidr      = "10.0.2.0/24"
+  sbn1_az                = "us-east-1a"
+  sbn2_az                = "us-east-1b"
+  http_ingress_from_port = 80
+  http_ingress_to_port   = 80
+  ssh_ingress_from_port  = 22
+  ssh_ingress_to_port    = 22
+  protocol               = "tcp"
+  ingress_cidr           = ["0.0.0.0/0"]
+  task_bucket_name       = "ultron-s3-poc-hands-on"
+  task_server_ami        = "ami-0521cb2d60cfbb1a6"
+  instance_key           = "us-east-1"
+  instance_type          = "t2.micro"
+  instance_iam_role      = "ec2-ssm-role"
+  user_data1             = base64encode("userdata1.sh")
+  user_data2             = base64encode("userdata2.sh")
 }
