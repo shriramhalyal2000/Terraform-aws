@@ -9,13 +9,65 @@ variable "public_subnet_cidr" {
 }
 variable "public_sbn_2_cidr" {
   description = "public subnet 2 cidr"
-  type = string
+  type        = string
 }
 variable "sbn1_az" {
   description = "availability zone of subnet"
-  type = string
+  type        = string
 }
-variable "sbn2_az"{
+variable "sbn2_az" {
   description = "availability zone of sbnet2"
-  type = string
+  type        = string
+}
+variable "http_ingress_from_port" {
+  description = "http ingress from port of client to serverfor sg"
+  type        = number
+}
+variable "http_ingress_to_port" {
+  description = "http ingress to port of server from client port for sg"
+  type        = number
+}
+variable "ssh_ingress_from_port" {
+  description = "ssh ingress port from client port to server for sg"
+  type        = number
+}
+variable "ssh_ingress_to_port" {
+  description = "ssh  ingress to port of server from client for sg"
+  type        = number
+}
+variable "protocol" {
+  description = "ingress protocol for sg"
+  type        = string
+}
+variable "ingress_cidr" {
+  description = "from public internet cidr to access server"
+  type        = list(string)
+}
+variable "task_bucket_name" {
+  description = "bucket name for the task"
+  type        = string
+}
+variable "task_server_ami" {
+  description = "ami id for server 1"
+  type        = string
+}
+variable "instance_key" {
+  description = "instance key for server1"
+  type        = string
+}
+variable "instance_type" {
+  description = "instance type for server"
+  type        = string
+}
+variable "instance_iam_role" {
+  description = "instance iam role "
+  type        = string
+}
+variable "user_data1" {
+  description = "userdata for instance to host during provisioning"
+  type        = string
+}
+variable "user_data2" {
+  description = "userdata for instance to host during provisioning"
+  type        = string
 }
