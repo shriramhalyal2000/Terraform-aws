@@ -137,7 +137,7 @@ resource "aws_instance" "task_server_1" {
   instance_type          = var.instance_type
   iam_instance_profile   = var.instance_iam_role
   subnet_id              = aws_subnet.my_public_sbn.id
-  user_data_base64       = var.user_data1
+  user_data_base64       =  base64encode(file("userdata1.sh"))
 
   tags={
     Name = "server1"
@@ -151,7 +151,7 @@ resource "aws_instance" "task_server_2" {
   instance_type          = var.instance_type
   iam_instance_profile   = var.instance_iam_role
   subnet_id              = aws_subnet.public_sbn_2.id
-  user_data_base64       = var.user_data2
+  user_data_base64       =  base64encode(file("userdata2.sh"))
   tags={
     Name="server2"
   }

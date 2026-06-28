@@ -16,6 +16,4 @@ module "vpc" {
   instance_key           = "us-east-1"
   instance_type          = "t2.micro"
   instance_iam_role      = "ec2-ssm-role"
-  user_data1             = base64decode(file("../userdata1.sh"))
-  user_data2             = base64decode(file("../userdata2.sh"))
 }

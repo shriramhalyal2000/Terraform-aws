@@ -63,11 +63,3 @@ variable "instance_iam_role" {
   description = "instance iam role "
   type        = string
 }
-variable "user_data1" {
-  description = "userdata for instance to host during provisioning"
-  type        = string
-}
-variable "user_data2" {
-  description = "userdata for instance to host during provisioning"
-  type        = string
-}
