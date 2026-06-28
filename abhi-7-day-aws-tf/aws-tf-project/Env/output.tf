@@ -58,3 +58,6 @@ output "instance2_sg" {
 output "bucket_id" {
   value = module.vpc.bucket_id
 }
+output "loadbalancer_dns" {
+  value = module.vpc.loadbalancer_dns
+}

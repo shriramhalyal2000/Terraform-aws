@@ -63,3 +63,31 @@ variable "instance_iam_role" {
   description = "instance iam role "
   type        = string
 }
+variable "lb_name" {
+  description = "loadblancer name"
+  type        = string
+}
+variable "lb_type" {
+  description = "load balancer type, application or network"
+  type        = string
+}
+variable "lb_tg_name" {
+  description = "target group name for alb"
+  type        = string
+}
+variable "alb_tg_port" {
+  description = "target group listing port"
+  type        = number
+}
+variable "alb_tg_protocol" {
+  description = "target group protocol"
+  type        = string
+}
+variable "lb_target_grp_attch_port" {
+  description = "target group attachment port for lb"
+  type        = number
+}
+variable "alb_listener_port" {
+  description = "alb listener group port"
+  type        = number
+}

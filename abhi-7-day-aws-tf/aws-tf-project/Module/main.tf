@@ -137,13 +137,13 @@ resource "aws_instance" "task_server_1" {
   instance_type          = var.instance_type
   iam_instance_profile   = var.instance_iam_role
   subnet_id              = aws_subnet.my_public_sbn.id
-  user_data_base64       =  base64encode(file("userdata1.sh"))
+  user_data_base64       = base64encode(file("../Module/userdata1.sh"))
 
-  tags={
+  tags = {
     Name = "server1"
   }
 }
-
+# define ec2 instancer server
 resource "aws_instance" "task_server_2" {
   ami                    = var.task_server_ami
   vpc_security_group_ids = [aws_security_group.sg_resource.id]
@@ -151,8 +151,58 @@ resource "aws_instance" "task_server_2" {
   instance_type          = var.instance_type
   iam_instance_profile   = var.instance_iam_role
   subnet_id              = aws_subnet.public_sbn_2.id
-  user_data_base64       =  base64encode(file("userdata2.sh"))
-  tags={
-    Name="server2"
+  user_data_base64       = base64encode(file("../Module/userdata2.sh")) # userdata is not getting 
+  #updated or instanctiated with both instances
+  tags = {
+    Name = "server2"
+  }
+}
+
+# create an alb
+resource "aws_lb" "task_alb" {
+  name               = var.lb_name
+  internal           = false
+  load_balancer_type = var.lb_type
+  security_groups    = [aws_security_group.sg_resource.id]
+  subnets            = [aws_subnet.my_public_sbn.cidr_block, aws_subnet.public_sbn_2.cidr_block]
+
+  tags = {
+    Name        = local.lb_name
+    Enviornment = local.lb_env
+  }
+}
+# defined resource target group
+resource "aws_lb_target_group" "lb_tg" {
+  name     = var.lb_tg_name
+  port     = var.alb_tg_port
+  protocol = var.alb_tg_protocol
+  vpc_id   = aws_vpc.task_vpc.id
+
+}
+
+# like subnet assc, target groups need to be associated 
+resource "aws_lb_target_group_attachment" "attch_server1" {
+  target_group_arn = aws_lb_target_group.lb_tg.arn
+  target_id        = aws_instance.task_server_1.id
+  port             = var.lb_target_grp_attch_port
+}
+
+# attach server 2 to target group 
+resource "aws_lb_target_group_attachment" "attach_server2" {
+  target_group_arn = aws_lb_target_group.lb_tg.arn
+  target_id        = aws_instance.task_server_2.id
+  port             = var.lb_target_grp_attch_port
+}
+
+# attach loadbalancer to listen to port , and attach target group
+resource "aws_lb_listener" "listen" {
+  load_balancer_arn = aws_lb.task_alb.arn
+  port              = var.alb_listener_port
+  protocol          = "HTTP"
+
+  # attach target group
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_tg.arn
   }
 }
