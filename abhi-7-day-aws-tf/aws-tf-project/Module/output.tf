@@ -73,3 +73,7 @@ output "instance1_subnet_id" {
 output "instance2_subnet_id" {
   value = aws_instance.task_server_1.subnet_id
 }
+
+output "loadbalancer_dns" {
+  value = aws_lb.task_alb.dns_name
+}
