@@ -16,9 +16,9 @@ module "vpc" {
   instance_key             = "us-east-1"
   instance_type            = "t2.micro"
   instance_iam_role        = "ec2-ssm-role"
-  lb_name                  = "task_lb"
+  lb_name                  = "task-lb"
   lb_type                  = "application"
-  lb_tg_name               = "task_lb_tg"
+  lb_tg_name               = "task-lb-tg"
   alb_tg_port              = 80
   alb_tg_protocol          = "HTTP"
   lb_target_grp_attch_port = 80
