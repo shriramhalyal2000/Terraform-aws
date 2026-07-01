@@ -164,7 +164,7 @@ resource "aws_lb" "task_alb" {
   internal           = false
   load_balancer_type = var.lb_type
   security_groups    = [aws_security_group.sg_resource.id]
-  subnets            = [aws_subnet.my_public_sbn.cidr_block, aws_subnet.public_sbn_2.cidr_block]
+  subnets            = [aws_subnet.my_public_sbn.id, aws_subnet.public_sbn_2.id]
 
   tags = {
     Name        = local.lb_name
@@ -180,7 +180,7 @@ resource "aws_lb_target_group" "lb_tg" {
 
 }
 
-# like subnet assc, target groups need to be associated 
+# like subnet assc, target groups need to be associated attach ec2 instance with tg
 resource "aws_lb_target_group_attachment" "attch_server1" {
   target_group_arn = aws_lb_target_group.lb_tg.arn
   target_id        = aws_instance.task_server_1.id
