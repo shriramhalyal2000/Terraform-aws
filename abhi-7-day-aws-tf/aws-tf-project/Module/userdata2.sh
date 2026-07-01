@@ -7,7 +7,7 @@ systemctl start httpd
 systemctl enable httpd
 
 # FIXED: Removed spaces around the '=' sign
-IMG_NAME="ultron-iron-man-suit.jpg"
+IMG_NAME="avenger_logo.jpeg"
 BUCKET_NAME="ultron-s3-us-east-1-gp-bucket"
 TF_BUCKET_NAME="ultron-s3-poc-hands-on"
 
@@ -24,5 +24,5 @@ aws s3 cp s3://$TF_BUCKET_NAME/$IMG_NAME /var/www/html/$IMG_NAME
 cat <<EOF > /var/www/html/index.html
 <h1>Hello World from $(hostname -f)</h1>
 <h2>Instance ID: $INSTANCE_ID</h2>
-<img src="$IMG_NAME" alt="Ultron Iron Man Suit" style="max-width:100%; height:auto;">
+<img src="$IMG_NAME" alt="avenger_logo" style="max-width:100%; height:auto;">
 EOF
