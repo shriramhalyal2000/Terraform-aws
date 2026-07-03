@@ -1,0 +1,52 @@
+DevOps Engineer Technical Assignment (1–2 Years Experience)
+
+Submission Deadline: 2026-07-03 (Validity: 1 Day)
+Objective
+Design, deploy, secure, monitor and document a production-like application on AWS Free Tier. The assignment evaluates cloud, DevOps, security, CI/CD, monitoring and performance skills.
+Tasks
+Create AWS infrastructure using Free Tier services.
+Launch and configure an EC2 instance.
+Deploy a sample web application/API on EC2.
+Use Amazon S3 for static assets or backups.
+Configure API Gateway where applicable.
+Configure IAM users/roles with least privilege.
+Configure Security Groups and firewall rules.
+Set up HTTPS if possible.
+Create an automated CI/CD pipeline using GitHub Actions, Jenkins, Azure DevOps or AWS CodePipeline.
+Enable CloudWatch monitoring, dashboards and alarms.
+Collect application logs.
+Perform load testing using JMeter, k6 or Locust.
+Record CPU, memory, latency, throughput, response time and error rate.
+Analyze performance bottlenecks and suggest optimizations.
+Prepare an architecture diagram.
+Deliverables
+Git repository.
+Deployment guide.
+Architecture diagram.
+Pipeline configuration.
+Monitoring screenshots.
+Load testing report with graphs and observations.
+Security summary.
+5–10 minute implementation/demo video.
+Final report (PDF/DOCX) with setup steps, results, challenges and improvements.
+
+Evaluation
+Criteria
+Weight
+Infrastructure
+20%
+CI/CD
+20%
+Security
+15%
+Monitoring
+15%
+Load Testing
+15%
+Documentation & Demo
+10%
+Best Practices
+5%
+
+Submission Deadline
+Validity: 1 day from assignment issue. Submit all deliverables before the deadline. Use AWS Free Tier resources to minimize cost.
