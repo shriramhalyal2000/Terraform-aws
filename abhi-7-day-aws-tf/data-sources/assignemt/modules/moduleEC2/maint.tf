@@ -15,7 +15,7 @@ data "aws_subnet" "deployed_subnet1"{
     }
     id = var.subnet1_id
 }
-
+# ami data look up
 data "aws_ami" "amazon_linux_2023"{
     owners = ["amazon"]
     most_recent = true
