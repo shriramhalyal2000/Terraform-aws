@@ -1,0 +1,3 @@
+This is a EC2 module of tf script
+wher eit looks up for previously created resource from module VPC and usues its id, 
+and subnet id to launch ec2 with public ipv4 mapping

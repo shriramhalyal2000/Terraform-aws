@@ -1,0 +1,6 @@
+This is a VPC module strictl consistin of vpc networking resources
+
+VPC 
+2 public sibnet sharing a route table
+a single rote table managing route to subent and igw
+and an igw
