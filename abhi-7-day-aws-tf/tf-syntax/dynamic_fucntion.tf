@@ -44,20 +44,20 @@ variable "ingress"{
         protocol = string
         cidr_blocks= list(string)
     }))
-    default = [
-        { #http ingress
+    default = {
+        http = { #http ingress
             from_port = 80,
             to_port = 80,
             protocol = "tcp",
             cidr_blocks = ["0.0.0.0/0"]
         },
-        { #ssh ingress
+        ssh={ #ssh ingress
             from_port = 22,
             to_port = 22,
             cidr_blocks = ["0.0.0.0/0"],
             protocol = "tcp"
         }
-    ]
+    }
 }
 
 variable "egress"{
@@ -68,12 +68,12 @@ variable "egress"{
         protocol = number
         cidr_blocks = list(string)
     }))
-    default =[
-        {#egress
+    default ={
+        all_port={#egress
             from_port = 0
             to_port = 0
             protocol = -1
             cidr_blocks = ["0.0.0.0/0"]
         }
-    ]
+    }
 }
