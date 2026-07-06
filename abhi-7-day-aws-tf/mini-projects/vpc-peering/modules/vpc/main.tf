@@ -3,6 +3,7 @@
 # vpc 1 resource
 resource "aws_vpc" "vpc1" {
   cidr_block = var.vpc1_cidr
+  provider = aws.primary
   tags = {
     Name = local.vpc1_name
   }
@@ -10,6 +11,7 @@ resource "aws_vpc" "vpc1" {
 # vpc 2 resource
 resource "aws_vpc" "vpc2" {
   cidr_block = var.vpc2_cidr
+  provider = aws.secondary
   tags = {
     Name = local.vpc2_name
   }
@@ -25,6 +27,8 @@ resource "aws_subnet" "subnet1" {
 }
 # vpc2 subnet resource
 resource "aws_subnet" "subnet2" {
+    depends_on = [ aws_vpc.vpc2 ]
+  provider = aws.secondary
   vpc_id     = aws_vpc.vpc2.id
   cidr_block = var.subnet2_cidr
   map_public_ip_on_launch = true
@@ -57,6 +61,8 @@ resource "aws_route_table_association" "sbn1" {
 }
 # vpc2 igw resource
 resource "aws_internet_gateway" "igw2" {
+    depends_on = [ aws_vpc.vpc2 ]
+  provider = aws.secondary
   vpc_id = aws_vpc.vpc2.id
   tags = {
     Name = local.igw2_name
@@ -64,6 +70,8 @@ resource "aws_internet_gateway" "igw2" {
 }
 # vpc 2 subnet route table resource
 resource "aws_route_table" "rt2" {
+    depends_on = [ aws_vpc.vpc2, aws_internet_gateway.igw2 ]
+  provider = aws.secondary
   vpc_id = aws_vpc.vpc2.id
   route {
     cidr_block = "0.0.0.0/0"
@@ -75,6 +83,8 @@ resource "aws_route_table" "rt2" {
 }
 #vpc2 subnet assc resource
 resource "aws_route_table_association" "sbn2" {
+    depends_on = [ aws_subnet.subnet2, aws_route_table.rt2 ]
+  provider = aws.secondary
   route_table_id = aws_route_table.rt2.id
   subnet_id      = aws_subnet.subnet2.id
 }
