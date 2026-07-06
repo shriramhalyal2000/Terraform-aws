@@ -18,6 +18,7 @@ resource "aws_vpc" "vpc2" {
 resource "aws_subnet" "subnet1" {
   vpc_id     = aws_vpc.vpc1.id
   cidr_block = var.subnet1_cidr
+  map_public_ip_on_launch = true
   tags = {
     Name = local.subnet1_name
   }
@@ -26,6 +27,7 @@ resource "aws_subnet" "subnet1" {
 resource "aws_subnet" "subnet2" {
   vpc_id     = aws_vpc.vpc2.id
   cidr_block = var.subnet2_cidr
+  map_public_ip_on_launch = true
   tags = {
     Name = local.subnet2_name
   }
