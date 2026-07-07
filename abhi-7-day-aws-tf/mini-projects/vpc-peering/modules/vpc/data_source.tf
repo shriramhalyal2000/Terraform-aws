@@ -43,3 +43,11 @@ data "aws_ami" "vpc2ami"{
         values = ["x86_64"]
     }
 }
+# fetch data of vpc1 region
+data "aws_region" "primary"{
+    provider = aws.primary
+}
+# fetch data of vpc2 region
+data "aws_region" "secondary"{
+    provider = aws.secondary
+}

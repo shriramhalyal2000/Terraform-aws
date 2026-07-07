@@ -7,4 +7,10 @@ locals {
   igw2_name    = "igw2"
   rt1_name     = "rt1"
   rt2_name     = "rt2"
+  rt_asc_subn1 = "routable_subn1_asc"
+  rt_asc_subn2 = "routable_subn2_asc"
+  peer_vpc1_conn = "requestor_vpc"
+  peering_con_side_1 = "peering_requestor"
+  peer_vpc2_conn = "acceptor_vpc"
+  peering_con_side_2 = "peering_acceptor"
 }

@@ -22,3 +22,9 @@ output "igw1_id" {
 output "igw2_id" {
   value = module.vpc.igw2_id
 }
+output "peer_requestor_id"{
+  value = module.vpc.peering_connection_id_requestor
+}
+output "peering_acceptor_id" {
+  value = module.vpc.peering_connection_accpetor_id
+}
