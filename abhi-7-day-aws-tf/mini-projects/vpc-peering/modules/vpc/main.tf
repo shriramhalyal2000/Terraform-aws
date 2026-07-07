@@ -4,6 +4,9 @@
 resource "aws_vpc" "vpc1" {
   cidr_block = var.vpc1_cidr
   provider = aws.primary
+  instance_tenancy = var.instance_tenancy_vpc1
+  enable_dns_hostnames = true
+  enable_dns_support = true
   tags = {
     Name = local.vpc1_name
   }
@@ -12,6 +15,9 @@ resource "aws_vpc" "vpc1" {
 resource "aws_vpc" "vpc2" {
   cidr_block = var.vpc2_cidr
   provider = aws.secondary
+  instance_tenancy = var.instance_tenancy_vpc2
+  enable_dns_hostnames = true
+  enable_dns_support = true
   tags = {
     Name = local.vpc2_name
   }
@@ -21,6 +27,7 @@ resource "aws_subnet" "subnet1" {
   vpc_id     = aws_vpc.vpc1.id
   cidr_block = var.subnet1_cidr
   map_public_ip_on_launch = true
+  availability_zone = data.aws_availability_zones.vpc1sbn1.names[0]
   tags = {
     Name = local.subnet1_name
   }
@@ -32,6 +39,7 @@ resource "aws_subnet" "subnet2" {
   vpc_id     = aws_vpc.vpc2.id
   cidr_block = var.subnet2_cidr
   map_public_ip_on_launch = true
+  availability_zone = data.aws_availability_zones.vpc2sbn2.names[0]
   tags = {
     Name = local.subnet2_name
   }
