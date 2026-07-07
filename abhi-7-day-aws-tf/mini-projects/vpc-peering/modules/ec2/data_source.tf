@@ -36,14 +36,30 @@ data "aws_ami" "vpc2ami"{
     }
 }
 data "aws_subnet" "subnet1"{
+    provider = aws.primary
     filter{
         name = "tag:Name"
         values = ["subnet1"]
     }
 }
 data "aws_subnet" "subnet2"{
+    provider = aws.secondary
     filter {
       name = "tag:Name"
       values = ["subnet2"]
+    }
+}
+data "aws_vpc" "vpc1"{
+    provider = aws.primary
+    filter{
+        name = "tag:Name"
+        values = ["vpc1"]
+    }
+}
+data "aws_vpc" "vpc2"{
+    provider = aws.secondary
+    filter{
+        name = "tag:Name"
+        values = ["vpc2"]
     }
 }

@@ -20,16 +20,16 @@ variable "ingress"{
 }
 resource "aws_security_group" "sg-1"{
   provider = aws.primary
-  name = "${local.vpc1_name}-sg"
+  name = "vpc1-sg"
   description = "allows ssh, http, imcp and traffic from vpc2 on to vpc1 instance"
-  vpc_id = aws_vpc.vpc1.id
+  vpc_id = data.aws_vpc.vpc1.id
 
   dynamic "ingress" {
     for_each = var.ingress
-    contents{
+    content{
       from_port = ingress.value.from_port
       to_port = ingress.value.to_port
-      cidr_block = ingress.value.cidr_block
+      cidr_blocks = ingress.value.cidr_block
       protocol = ingress.value.protocol
     }
   }
@@ -37,7 +37,7 @@ resource "aws_security_group" "sg-1"{
     from_port = 0
     to_port = 0
     protocol = -1
-    cidr_block = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   tags={
     Name = "vpc1-security_group"
@@ -49,16 +49,15 @@ resource "aws_instance" "vpc1_instance"{
   ami = data.aws_ami.vpc1ami.id
   instance_type = var.instance_type
   key_name = var.instance_key
-  subnet_id = data.aws_subnet.subent1.id
-  vpc_security_group_ids = [aws_security_group.sg-1]
-  iam_instance_role = var.iam_instance_role
+  subnet_id = data.aws_subnet.subnet1.id
+  vpc_security_group_ids = [aws_security_group.sg-1.id]
+  iam_instance_profile = var.iam_instance_role
   ebs_block_device{
     volume_size = var.volume_size
     volume_type = var.volume_type
     device_name = var.device_name
     delete_on_termination = true
   }
-  userdata64 = ""
   tags={
     Name = "vpc1-server"
   }
@@ -68,9 +67,9 @@ resource "aws_instance" "vpc1_instance"{
 
 resource "aws_security_group" "sg-2"{
   provider = aws.secondary
-  vpc_id = aws_vpc.vpc2.id
+  vpc_id = data.aws_vpc.vpc2.id
   description = "allows ssh, hhtp, impc from vpc1 and internet and vpc1 pings"
-  name = "${local.vpc2_name}-sg"
+  name = "vpc2-sg"
 
   dynamic "ingress" {
     for_each = var.ingress
@@ -78,7 +77,7 @@ resource "aws_security_group" "sg-2"{
       from_port = ingress.value.from_port
       to_port = ingress.value.to_port
       protocol = ingress.value.protocol
-      cidr_block = ingress.value.cidr_block
+      cidr_blocks = ingress.value.cidr_block
     }
   }
   tags={
@@ -86,7 +85,7 @@ resource "aws_security_group" "sg-2"{
   }
 }
 
-variable "ingress"{
+variable "ingress1"{
   description = "security group to allow traffic from vpc1 cidr, ssh, http,and imcp ping from vpc1 cidr"
   type = map(object({
     from_port = number
@@ -115,8 +114,7 @@ resource "aws_instance" "vpc2_instance"{
   key_name = var.instance_key2
   subnet_id = data.aws_subnet.subnet2.id
   iam_instance_profile = var.iam_instance_role
-  vpc_security_group = [aws_security_group.sg2.id]
-  userdata64 = ""
+  vpc_security_group_ids = [aws_security_group.sg-2.id]
   tags={
     Name = "vpc2-server"
   }
