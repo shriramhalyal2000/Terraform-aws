@@ -12,4 +12,13 @@ variable "subnet1_cidr" {
 }
 variable "subnet2_cidr" {
   description = "subnet2 ip cidr in vpc2"
+  type = string
+}
+variable "instance_tenancy_vpc1"{
+  description = "vpc1 instance tenancy "
+  type = string
+}
+variable "instance_tenancy_vpc2"{
+  description = "vpc2 instance tenancy "
+  type = string
 }

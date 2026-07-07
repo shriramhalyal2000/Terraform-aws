@@ -8,4 +8,6 @@ module "vpc" {
     aws.primary = aws.primary
     aws.secondary= aws.secondary
   }
+  instance_tenancy_vpc1 = "default"
+  instance_tenancy_vpc2 = "default"
 }
