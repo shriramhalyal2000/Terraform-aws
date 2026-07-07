@@ -104,3 +104,43 @@ resource "aws_route_table_association" "sbn2" {
   route_table_id = aws_route_table.rt2.id
   subnet_id      = aws_subnet.subnet2.id
 }
+# create peering resource for both vpc
+resource "aws_vpc_peering_connection" "requestor"{
+  provider = aws.primary
+  vpc_id = aws_vpc.vpc1.id # peering initiator id
+  peer_vpc_id = aws_vpc.vpc2.id # destination vpc id
+  peer_region = data.aws_region.secondary.name
+  auto_accept = false
+
+  tags={
+    Name = local.peer_vpc1_conn
+    Side = local.peering_con_side_1
+  }
+}
+# create peering resource for both vpc by it being accptor for vpc1 per request
+resource "aws_vpc_peering_connection_accepter" "acceptor"{
+  provider = aws.secondary
+  depends_on = [ aws_vpc_peering_connection.requestor ]
+  vpc_peering_connection_id = aws_vpc_peering_connection.requestor.id
+  auto_accept = true
+
+  tags={
+    Name = local.peer_vpc2_conn
+    Side = local.peering_con_side_2
+  }
+}
+# create route for vpc peering
+resource "aws_route" "vpc1_to_vpc2"{
+  provider = aws.primary
+  depends_on = [ aws_vpc_peering_connection_accepter.acceptor ]
+  route_table_id = aws_route_table.rt1.id
+  destination_cidr_block = aws_vpc.vpc2.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.requestor.id
+}
+resource "aws_route" "vpc2_to_vpc1"{
+  provider = aws.secondary
+  depends_on = [ aws_vpc_peering_connection_accepter.acceptor ]
+  route_table_id = aws_route_table.rt2.id
+  destination_cidr_block = aws_vpc.vpc1.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection_accepter.acceptor.id
+}

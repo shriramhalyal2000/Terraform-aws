@@ -22,3 +22,9 @@ output "rt2_id" {
 output "igw2_id" {
   value = aws_internet_gateway.igw2.id
 }
+output "peering_connection_id_requestor"{
+  value = aws_vpc_peering_connection.requestor.id
+}
+output "peering_connection_accpetor_id"{
+  value = aws_vpc_peering_connection_accepter.acceptor.id
+}
