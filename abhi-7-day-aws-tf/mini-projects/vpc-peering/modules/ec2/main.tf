@@ -1,0 +1,123 @@
+# create two ec2 instance with icmp protocol and instance should accept traffic 
+# from both vpc, so add vpc cidrs in instances ec2-sg1-cidr_block_secondary_vpc2
+
+# security group from primary vpc
+variable "ingress"{
+  description = "security group to allow traffic from vpc1 cidr, ssh, http and imcp from vpc2 cidr"
+  type = map(object({
+    from_port = number
+    to_port = number 
+    protocol = string
+    cidr_block = list(string)
+  }))
+  default = {
+    ssh = {
+      from_port = 22, to_port =22, cidr_block = ["0.0.0.0/0"], protocol = "tcp"},
+    http = { from_port = 80, to_port = 80, cidr_block = ["0.0.0.0/0"], protocol = "tcp" },
+    icmp = {from_port = -1, to_port = -1, cidr_block = ["10.2.0.0/16"], protocol = "icmp"},
+    vpc2_traffic = { from_port = 0, to_port = 65535, cidr_block = ["10.2.0.0/16"], protocol =-1}
+  }
+}
+resource "aws_security_group" "sg-1"{
+  provider = aws.primary
+  name = "${local.vpc1_name}-sg"
+  description = "allows ssh, http, imcp and traffic from vpc2 on to vpc1 instance"
+  vpc_id = aws_vpc.vpc1.id
+
+  dynamic "ingress" {
+    for_each = var.ingress
+    contents{
+      from_port = ingress.value.from_port
+      to_port = ingress.value.to_port
+      cidr_block = ingress.value.cidr_block
+      protocol = ingress.value.protocol
+    }
+  }
+  egress{
+    from_port = 0
+    to_port = 0
+    protocol = -1
+    cidr_block = ["0.0.0.0/0"]
+  }
+  tags={
+    Name = "vpc1-security_group"
+  }
+}
+
+resource "aws_instance" "vpc1_instance"{
+  provider = aws.primary
+  ami = data.aws_ami.vpc1ami.id
+  instance_type = var.instance_type
+  key_name = var.instance_key
+  subnet_id = data.aws_subnet.subent1.id
+  vpc_security_group_ids = [aws_security_group.sg-1]
+  iam_instance_role = var.iam_instance_role
+  ebs_block_device{
+    volume_size = var.volume_size
+    volume_type = var.volume_type
+    device_name = var.device_name
+    delete_on_termination = true
+  }
+  userdata64 = ""
+  tags={
+    Name = "vpc1-server"
+  }
+}
+
+# security group for vpc2 instance
+
+resource "aws_security_group" "sg-2"{
+  provider = aws.secondary
+  vpc_id = aws_vpc.vpc2.id
+  description = "allows ssh, hhtp, impc from vpc1 and internet and vpc1 pings"
+  name = "${local.vpc2_name}-sg"
+
+  dynamic "ingress" {
+    for_each = var.ingress
+    content{
+      from_port = ingress.value.from_port
+      to_port = ingress.value.to_port
+      protocol = ingress.value.protocol
+      cidr_block = ingress.value.cidr_block
+    }
+  }
+  tags={
+    Name = "vpc2-sg"
+  }
+}
+
+variable "ingress"{
+  description = "security group to allow traffic from vpc1 cidr, ssh, http,and imcp ping from vpc1 cidr"
+  type = map(object({
+    from_port = number
+    to_port = number 
+    protocol = string
+    cidr_block = list(string)
+  }))
+  default = {
+    ssh = {
+      from_port = 22, to_port =22, cidr_block = ["0.0.0.0/0"], protocol = "tcp"},
+    http = { from_port = 80, to_port = 80, cidr_block = ["0.0.0.0/0"], protocol = "tcp" },
+    icmp = {from_port = -1, to_port = -1, cidr_block = ["10.1.0.0/16"], protocol = "icmp"},
+    vpc2_traffic = { from_port = 0, to_port = 65535, cidr_block = ["10.1.0.0/16"], protocol =-1}
+  }
+}
+resource "aws_instance" "vpc2_instance"{
+  provider = aws.secondary
+  ami = data.aws_ami.vpc2ami.id
+  ebs_block_device{
+    volume_size = var.volume_size
+    volume_type = var.volume_type
+    device_name = var.device_name
+    delete_on_termination = true
+  }
+  instance_type = var.instance_type
+  key_name = var.instance_key2
+  subnet_id = data.aws_subnet.subnet2.id
+  iam_instance_profile = var.iam_instance_role
+  vpc_security_group = [aws_security_group.sg2.id]
+  userdata64 = ""
+  tags={
+    Name = "vpc2-server"
+  }
+}

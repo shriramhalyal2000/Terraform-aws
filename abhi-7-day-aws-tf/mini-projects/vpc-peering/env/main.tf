@@ -11,3 +11,17 @@ module "vpc" {
   instance_tenancy_vpc1 = "default"
   instance_tenancy_vpc2 = "default"
 }
+module "ec2"{
+  source = "../modules/ec2"
+  instance_key = "vpc-peeding-demo"
+  instance_key2 = "vpc-peeding-demo-west"
+  instance_type = "t3.micro"
+  volume_size = 8
+  volume_type = "gp3"
+  device_name = "/dev/sdb"
+  iam_instance_role = "ec2-ssm-role"
+    providers = {
+    aws.primary = aws.primary
+    aws.secondary= aws.secondary
+  }
+}
