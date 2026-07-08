@@ -2,22 +2,7 @@
 # from both vpc, so add vpc cidrs in instances ec2-sg1-cidr_block_secondary_vpc2
 
 # security group from primary vpc
-variable "ingress"{
-  description = "security group to allow traffic from vpc1 cidr, ssh, http and imcp from vpc2 cidr"
-  type = map(object({
-    from_port = number
-    to_port = number 
-    protocol = string
-    cidr_block = list(string)
-  }))
-  default = {
-    ssh = {
-      from_port = 22, to_port =22, cidr_block = ["0.0.0.0/0"], protocol = "tcp"},
-    http = { from_port = 80, to_port = 80, cidr_block = ["0.0.0.0/0"], protocol = "tcp" },
-    icmp = {from_port = -1, to_port = -1, cidr_block = ["10.2.0.0/16"], protocol = "icmp"},
-    vpc2_traffic = { from_port = 0, to_port = 65535, cidr_block = ["10.2.0.0/16"], protocol =-1}
-  }
-}
+
 resource "aws_security_group" "sg-1"{
   provider = aws.primary
   name = "vpc1-sg"
@@ -25,7 +10,7 @@ resource "aws_security_group" "sg-1"{
   vpc_id = data.aws_vpc.vpc1.id
 
   dynamic "ingress" {
-    for_each = var.ingress
+    for_each = var.ingress1
     content{
       from_port = ingress.value.from_port
       to_port = ingress.value.to_port
@@ -72,7 +57,7 @@ resource "aws_security_group" "sg-2"{
   name = "vpc2-sg"
 
   dynamic "ingress" {
-    for_each = var.ingress
+    for_each = var.ingress2
     content{
       from_port = ingress.value.from_port
       to_port = ingress.value.to_port
@@ -85,22 +70,7 @@ resource "aws_security_group" "sg-2"{
   }
 }
 
-variable "ingress1"{
-  description = "security group to allow traffic from vpc1 cidr, ssh, http,and imcp ping from vpc1 cidr"
-  type = map(object({
-    from_port = number
-    to_port = number 
-    protocol = string
-    cidr_block = list(string)
-  }))
-  default = {
-    ssh = {
-      from_port = 22, to_port =22, cidr_block = ["0.0.0.0/0"], protocol = "tcp"},
-    http = { from_port = 80, to_port = 80, cidr_block = ["0.0.0.0/0"], protocol = "tcp" },
-    icmp = {from_port = -1, to_port = -1, cidr_block = ["10.1.0.0/16"], protocol = "icmp"},
-    vpc2_traffic = { from_port = 0, to_port = 65535, cidr_block = ["10.1.0.0/16"], protocol =-1}
-  }
-}
+
 resource "aws_instance" "vpc2_instance"{
   provider = aws.secondary
   ami = data.aws_ami.vpc2ami.id

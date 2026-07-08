@@ -26,3 +26,22 @@ variable "instance_key2"{
     description = "instance 2 *.pem key for ssh"
     type = string
 }
+variable "ingress1"{
+  description = "security group to allow traffic from vpc1 cidr, ssh, http and imcp from vpc2 cidr"
+  type = map(object({
+    from_port = number
+    to_port = number 
+    protocol = string
+    cidr_block = list(string)
+  }))
+}
+
+variable "ingress2"{
+  description = "security group to allow traffic from vpc1 cidr, ssh, http,and imcp ping from vpc1 cidr"
+  type = map(object({
+    from_port = number
+    to_port = number 
+    protocol = string
+    cidr_block = list(string)
+  }))
+}
