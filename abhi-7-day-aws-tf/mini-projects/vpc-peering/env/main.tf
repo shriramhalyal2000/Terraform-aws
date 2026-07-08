@@ -24,4 +24,16 @@ module "ec2"{
     aws.primary = aws.primary
     aws.secondary= aws.secondary
   }
+  ingress2 = {
+    ssh = {from_port = 22, to_port =22, cidr_block = ["0.0.0.0/0"], protocol = "tcp"},
+    http = { from_port = 80, to_port = 80, cidr_block = ["0.0.0.0/0"], protocol = "tcp" },
+    icmp = {from_port = -1, to_port = -1, cidr_block = ["10.1.0.0/16"], protocol = "icmp"},
+    vpc2_traffic = { from_port = 0, to_port = 65535, cidr_block = ["10.1.0.0/16"], protocol =-1}
+  }
+  ingress1 = {
+    ssh = {from_port = 22, to_port =22, cidr_block = ["0.0.0.0/0"], protocol = "tcp"},
+    http = { from_port = 80, to_port = 80, cidr_block = ["0.0.0.0/0"], protocol = "tcp" },
+    icmp = {from_port = -1, to_port = -1, cidr_block = ["10.2.0.0/16"], protocol = "icmp"},
+    vpc2_traffic = { from_port = 0, to_port = 65535, cidr_block = ["10.2.0.0/16"], protocol =-1}
+  }
 }
