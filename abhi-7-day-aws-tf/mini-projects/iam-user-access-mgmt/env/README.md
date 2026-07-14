@@ -8,3 +8,5 @@ Next steps:
     setup sso
     add mkore attributes
     alternate onboardings integrate wiht hr services
+
+    This whole iam users are created from csv files
