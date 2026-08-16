@@ -15,7 +15,7 @@ terraform{
 
 module "object-upload"{
     source = "../mods"
-    bucket_name = "poc_obj_upload"
+    bucket_name = "poc-obj-upload"
     sns_topic_name = "s3-bucket-alert-topic"
     email = "sshalyal42@gmail.com"
 }
