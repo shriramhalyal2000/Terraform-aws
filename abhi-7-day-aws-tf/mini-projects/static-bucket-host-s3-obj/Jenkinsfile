@@ -4,53 +4,68 @@ pipeline{
         AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
         AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
         AWS_DEFAULT_REGION = 'us-east-1'
-        TF = 'terraform'
+        BUILD_RESULT= "${currentBuild.result}"
+        CURRENT_RESULT= "${currentBuild.currentResult}"
     }
     stages{
-        stage("checkout"){
+        stage('Checkout scm'){
             steps{
                 checkout scm
             }
         }
-        stage("Terraform init"){
+        stage('Terraform initialization'){
             steps{
-                sh """
-                "${TF}" init
-                echo "terraform initialized"
-                """
+                dir('env/'){
+                    sh '''
+                    echo "---Initialization---"
+                    terraform init
+                    '''
+                }
             }
         }
-        stage("Terraform plan"){
-            steps{ // savees plan in tfp variable
-                sh """
-                "${TF}" plan -out=tfp 
-                echo "terraform plan saved"
-                """
+        stage('Plan'){
+            steps{
+                dir('env/'){
+                    sh '''
+                    echo "--terraform plan---"
+                    terraform plan -out=tfplan
+                    echo "--plan stored in tfplan"
+                    '''
+                }
             }
         }
-        stage("Terraform apply"){
+        stage('Apply'){
             steps{
-                sh """
-                "${TF}" apply -input=false tfp
-                echo "terraform apply finished"
-                """
+                dir('env/'){
+                    sh '''
+                    echo "--applying tfplan---"
+                    terraform apply -input=false tfplan
+                    '''
+                }
             }
         }
-        stage("Output"){
+        stage('Status'){
             steps{
-                sh """
-                echo "terraform outputs"
-                "${TF}" output
-                """
+                dir('env/'){
+                    sh '''
+                    echo "--status---"
+                    terraform show
+
+                    echo "terraform outputs"
+                    terraform output
+                    '''
+                }
             }
         }
     }
     post{
         always{
-            sh """
-            rm -rf tfp
-            echo "finished build with status: ${currentBuild.currentResult}"
-            """
+            sh '''
+            echo "build finished with status: $BUILD_RESULT || $CURRENT_RESULT"
+            '''
+        }
+        failure{
+            mail to: 'sshalyal42@gmail.com', subject: 'Build failed.'
         }
     }
 }
