@@ -17,4 +17,4 @@
   5. create cloudwatch rule, and event pattern for it
   6. create iam policy doc for cloudwatch.
   7. create cloudwatch distribution with ttl, caches, s3 origin, certificate, regions.
-  8. create origin access control with s3 origin bucket
+  8. create origin access control with s3 origin bucket.

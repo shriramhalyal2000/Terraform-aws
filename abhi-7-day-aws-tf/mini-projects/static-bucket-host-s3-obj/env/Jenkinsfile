@@ -1,0 +1,55 @@
+pipeline{
+    agent {label "tf-agent"}
+    enviornment{
+        AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
+        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
+        TF_VAR = 'us-east-1'
+        TF = 'terraform'
+    }
+    stages{
+        stage("checkout"){
+            steps{
+                checkout scm
+            }
+        }
+        stage("Terraform init"){
+            steps{
+                sh """
+                "${TF}" init
+                echo "terraform initialized"
+                """
+            }
+        }
+        stage("Terraform plan"){
+            steps{ // savees plan in tfp variable
+                sh """
+                "${TF}" plan -out=tfp 
+                echo "terraform plan saved"
+                """
+            }
+        }
+        stage("Terraform apply"){
+            steps{
+                sh """
+                "${TF}" apply tfp
+                echo "terrafor apply finished"
+                """
+            }
+        }
+        stage("Output"){
+            steps{
+                sh """
+                echo "terraform outputs"
+                "${tf}" output
+                """
+            }
+        }
+    }
+    post{
+        alwys{
+            sh """
+            echo "finished build with status: ${currentBuild.currentResult}"
+            """
+        }
+    }
+}
