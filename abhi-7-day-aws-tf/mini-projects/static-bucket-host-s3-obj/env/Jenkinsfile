@@ -1,9 +1,9 @@
 pipeline{
     agent {label "tf-agent"}
-    enviornment{
+    environment{
         AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
         AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
-        TF_VAR = 'us-east-1'
+        AWS_DEFAULT_REGION = 'us-east-1'
         TF = 'terraform'
     }
     stages{
@@ -31,8 +31,8 @@ pipeline{
         stage("Terraform apply"){
             steps{
                 sh """
-                "${TF}" apply tfp
-                echo "terrafor apply finished"
+                "${TF}" apply -input=false tfp
+                echo "terraform apply finished"
                 """
             }
         }
@@ -40,14 +40,15 @@ pipeline{
             steps{
                 sh """
                 echo "terraform outputs"
-                "${tf}" output
+                "${TF}" output
                 """
             }
         }
     }
     post{
-        alwys{
+        always{
             sh """
+            rm -rf tfp
             echo "finished build with status: ${currentBuild.currentResult}"
             """
         }
