@@ -42,4 +42,4 @@ Thumbs.db
 # Python virtual environment (if using Terraform + Python)
 .venv/
 venv/
-*.pem
+*.pemtfp
