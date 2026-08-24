@@ -9,6 +9,7 @@ terraform{
         bucket = "ultron-tfstate-081374579218-us-east-1-an"
         key = "cloudfront-website/terraform.tfstate"
         region = "us-east-1"
+        dynamodb_table = "tf-state-locks"
         encrypt = true
     }
 }
