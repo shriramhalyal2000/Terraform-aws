@@ -45,3 +45,4 @@ venv/
 *.pemtfp
 tfp
 eks-vpc
+*.lock.hcl
