@@ -26,7 +26,7 @@ resource "aws_subnet" "eks_sub1"{
 resource  "aws_subnet" "eks_sub2"{
     vpc_id = aws_vpc.eks.id
     cidr_block = var.sub2_cidr
-    availability_zone = data.aws_availability_zones.available.names[0]
+    availability_zone = data.aws_availability_zones.available.names[1]
     map_public_ip_on_launch = true
 
     tags={
