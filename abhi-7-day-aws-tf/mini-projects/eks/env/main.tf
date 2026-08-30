@@ -20,4 +20,5 @@ module "eks"{
     vpc_cidr = "10.0.0.0/16"
     sub1_cidr = "10.0.1.0/24"
     sub2_cidr = "10.0.2.0/24"
+    eks_public_sbn_cidr = "10.0.3.0/24"
 }

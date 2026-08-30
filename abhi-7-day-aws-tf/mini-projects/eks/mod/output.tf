@@ -22,3 +22,9 @@ output "deafult_rt"{
 output "igw_id"{
     value = aws_internet_gateway.eks_igw
 }
+output "public_sbn_cidr"{
+    value = aws_subnet.eks_public_subnet.cidr_block
+}
+output "public_subnet_az"{
+    value = aws_subnet.eks_public_subnet.availability_zone
+}

@@ -4,4 +4,6 @@ locals{
     sub2_name = "eks-sbn2"
     igw_name = "eks-igw"
     rt_name = "eks-rt"
+    eks_public_sbn_name = "eks_public_subnet"
+    eks_public_rt = "eks_public_sbn_rt"
 }

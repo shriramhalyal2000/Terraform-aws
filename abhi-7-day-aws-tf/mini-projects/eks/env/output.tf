@@ -22,3 +22,9 @@ output "default_rt"{
 output "igw_id"{
     value = module.eks.igw_id
 }
+output "public_cidr"{
+    value = module.eks.public_sbn_cidr
+}
+output "publilc_az"{
+    value = module.eks.public_subnet_az
+}
