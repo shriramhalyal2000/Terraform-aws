@@ -10,3 +10,7 @@ variable "sub2_cidr" {
     description = "subnet2 vavailabilty zone"
     type = string
 }
+variable "eks_public_sbn_cidr" {
+    description = "public subent for eks vpc"
+    type = string
+}

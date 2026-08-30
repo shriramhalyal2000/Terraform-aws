@@ -57,3 +57,32 @@ resource "aws_route_table_association" "eks_sbn2_asc" { # joining rt with subnet
     subnet_id = aws_subnet.eks_sub2.id
     route_table_id = aws_default_route_table.eks_rt.id
 }
+# defining a public subnet to house a nat gateway
+
+resource "aws_subnet" "eks_public_subnet"{
+    vpc_id = aws_vpc.eks.id
+    cidr_block = var.eks_public_sbn_cidr
+    availability_zone = data.aws_availability_zones.available.names[2]
+    map_public_ip_on_launch = true
+
+    tags={
+        Name = local.eks_public_sbn_name
+    }
+}
+
+resource "aws_route_table" "eks_pub_sbn_rt"{
+    vpc_id = aws_vpc.eks.id
+
+    route{
+        cidr_block = "0.0.0.0/0"
+        gateway_id = aws_internet_gateway.eks_igw.id
+    }
+    tags={
+        Name = local.eks_public_rt
+    }
+}
+
+resource "aws_route_table_association" "eks_public_sbn" {
+    subnet_id = aws_subnet.eks_public_subnet.id
+    route_table_id = aws_route_table.eks_pub_sbn_rt.id
+}
