@@ -17,7 +17,7 @@ output "subnet2_az"{
     value = module.eks.subnet2_az
 }
 output "default_rt"{
-    value = module.eks.deafult_rt
+    value = module.eks.private_rt
 }
 output "igw_id"{
     value = module.eks.igw_id

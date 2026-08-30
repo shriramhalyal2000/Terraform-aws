@@ -6,4 +6,5 @@ locals{
     rt_name = "eks-pvt-rt"
     eks_public_sbn_name = "eks_public_subnet"
     eks_public_rt = "eks-public-rt"
+    nat_gtw = "eks-nat-gtw"
 }
