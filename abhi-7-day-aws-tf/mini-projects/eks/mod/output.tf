@@ -16,8 +16,8 @@ output "subnet1_az"{
 output "subnet2_az"{
     value = aws_subnet.eks_sub2.availability_zone
 }
-output "deafult_rt"{
-    value = aws_default_route_table.eks_rt.id
+output "private_rt"{
+    value = aws_route_table.eks_pvt_rt.id
 }
 output "igw_id"{
     value = aws_internet_gateway.eks_igw
@@ -27,4 +27,7 @@ output "public_sbn_cidr"{
 }
 output "public_subnet_az"{
     value = aws_subnet.eks_public_subnet.availability_zone
+}
+output "natgtw"{
+    value = aws_nat_gateway.eks_gtw.id
 }
