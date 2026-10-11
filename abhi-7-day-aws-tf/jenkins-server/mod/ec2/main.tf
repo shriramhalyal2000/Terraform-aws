@@ -5,6 +5,7 @@
     subnet_id = data.aws_subnet.selected.id
     iam_instance_profile = data.aws_iam_role.ssm_role.name
     security_groups = [aws_security_group.jenkins_sg.id]
+    associate_public_ip_address = true
     root_block_device {
       volume_size = var.ebs_vol_size
       volume_type = var.ebs_vol_type

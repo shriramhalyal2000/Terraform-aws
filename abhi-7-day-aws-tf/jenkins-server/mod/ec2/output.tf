@@ -10,8 +10,8 @@ output "instance_state"{
 output "instance_profile"{
     value = aws_instance.jenkins.iam_instance_profile
 }
-output "instance_public_dns"{
-    value = aws_instance.jenkins.public_dns
+output "instance_public_ip"{
+    value = aws_instance.jenkins.public_ip
 }
 output "instance_subnet"{
     value = aws_instance.jenkins.subnet_id

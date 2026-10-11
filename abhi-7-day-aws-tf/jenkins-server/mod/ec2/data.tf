@@ -11,17 +11,6 @@ data "aws_ami" "ama_lnx" {
         values= ["hvm"]
     }
 }
-data "aws_subnets" "available"{
-    filter{
-        name = "vpc-id"
-        values = [data.aws_vpc.poc_vpc.id]
-    }
-}
-
-data "aws_subnet" "selected"{
-    id = data.aws_subnets.available.ids[0]
-}
-
 data "aws_key_pair" "selected"{
     filter{
         name = "tag:Name"
@@ -38,4 +27,12 @@ data "aws_vpc" "poc_vpc"{
         name = "tag:Name"
         values = ["Jenkins-vpc"]
     }
+}
+
+data "aws_subnet" "selected"{
+    vpc_id = data.aws_vpc.poc_vpc.id
+    filter{
+        name = "map-public-ip-on-launch"
+        values = ["true"]
+    }   
 }
