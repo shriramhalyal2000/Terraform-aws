@@ -47,3 +47,4 @@ tfp
 .terraform
 jenkins-vpc
 .terraform.lock.hcl
+ec2
