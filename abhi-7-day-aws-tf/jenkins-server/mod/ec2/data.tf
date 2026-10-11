@@ -11,20 +11,21 @@ data "aws_ami" "ama_lnx" {
         values= ["hvm"]
     }
 }
-data "aws_subnet" "selected"{
+data "aws_subnets" "available"{
     filter{
-        name = "tag:Name"
-        values = ["poc_subnet"]
+        name = "vpc-id"
+        values = [data.aws_vpc.poc_vpc.id]
     }
 }
 
-data "aws_key_pair" "selected"{
+data "aws_subnet" "selected"{
+    id = data.aws_subnets.available.ids[0]
+}
 
-    key_name = "us-east-1"
-    include_public_key = true
+data "aws_key_pair" "selected"{
     filter{
         name = "tag:Name"
-        values = ["us-east-1"]
+        values = ["dev-az"]
     }
 }
 

@@ -19,7 +19,7 @@ provider "aws"{
 }
 
 module "vpc" {
-  source = "../mod/vpc"
+  source = "../../mod/vpc"
   vpc_cidr = "10.0.0.0/16"
   vpc_region = "us-east-1"
   subnet_cidr = "10.0.1.0/24"

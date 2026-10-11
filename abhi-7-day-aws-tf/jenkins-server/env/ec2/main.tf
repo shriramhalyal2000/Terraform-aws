@@ -20,7 +20,7 @@ provider "aws"{
 
 
 module "ec2"{
-    source = "../mod/ec2"
+    source = "../../mod/ec2"
     instance_type = "t3.medium"
     ebs_vol_size = 30
     ebs_vol_type = "gp3"
